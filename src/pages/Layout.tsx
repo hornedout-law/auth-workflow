@@ -14,10 +14,10 @@ function Layout() {
   let {authState} = useAuthLogic()
   let navigateTo = useNavigate()
   useEffect(()=>{
-    if(authState.user){
+    if(authState.user && authState.fullfilled){
       navigateTo(`/content`)
-    }else if(authState.admin){
-      navigateTo("/admin-dash")
+    }else if(authState.admin && authState.fullfilled){
+      navigateTo("/dash")
     }
   }, [authState])
   return (

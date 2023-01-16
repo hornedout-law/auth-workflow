@@ -51,6 +51,9 @@ export const loginAdmin = createAsyncThunk(
       let res = await fetch("/admin-login", {
         method: "POST",
         body: JSON.stringify(response.user),
+        headers: {
+          'Content-Type': 'application/json'
+        },
       });
 
       var data = await res.json();
