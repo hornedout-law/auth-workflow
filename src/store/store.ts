@@ -1,6 +1,5 @@
 import { createSlice, configureStore, SerializedError } from "@reduxjs/toolkit";
 import { User } from "firebase/auth";
-import { admin } from "./admin-sdk";
 import * as thunks from "./auth"
 
 export type AuthState = {
