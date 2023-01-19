@@ -1,7 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import { StaticRouter } from "react-router-dom/server"
-import { store } from "./store/store";
-import { Provider } from "react-redux";
 
 // import pages
 import Layout from "./pages/Layout"
@@ -14,9 +12,9 @@ import UserSignup from "./pages/UserSignup";
 function App(props: AppProps) {
   let Router = import.meta.env.SSR?StaticRouter:BrowserRouter
   let routerProps = import.meta.env.SSR?{location: props.url??"/"}:{}
+
   return (
-    <Provider store={store}>
-      {/* @ts-ignore */}
+    //@ts-ignore
       <Router {...routerProps}>
         <Routes>
           <Route path="/" element={<Layout/>}>
@@ -28,7 +26,6 @@ function App(props: AppProps) {
           </Route>
         </Routes>
       </Router>
-    </Provider>
 
   )
 }

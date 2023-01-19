@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react'
 import {Outlet, Link, useNavigate} from "react-router-dom"
 import { auth } from '../store/firebase'
-import {useAuthLogic} from "./auth.logic"
+import {useAuthStore} from "./auth.logic"
 
 /**
  * Layout component
@@ -11,15 +11,15 @@ import {useAuthLogic} from "./auth.logic"
  */
 
 function Layout() {
-  let {authState} = useAuthLogic()
+  let {user, admin} = useAuthStore(state=>({user: state.user, admin:state.admin}))
   let navigateTo = useNavigate()
   useEffect(()=>{
-    if(authState.user && authState.fullfilled){
+    if(user){
       navigateTo(`/content`)
-    }else if(authState.admin && authState.fullfilled){
+    }else if(admin){
       navigateTo("/dash")
     }
-  }, [authState])
+  }, [user, admin])
   return (
     <main className="w-[100vw] h-screen">
       <header className='flex flex-row w-full bg-white justify-end'>
@@ -27,8 +27,8 @@ function Layout() {
           <Link to="/" className='text-sky-700 px-4 py-2'>Login</Link>
           <Link to="/signup" className='text-sky-700 px-4 py-2'>Signup</Link>
           <Link to="/admin-login" className='text-sky-700 px-4 py-2'>Admin login</Link>
-          {authState.user?<Link to="/content" className='text-sky-700 px-4 py-2'>Content</Link>:""}
-          {authState.admin?<Link to="/dash" className='text-sky-700 px-4 py-2'>Dashboard</Link>:""}
+          {user?<Link to="/content" className='text-sky-700 px-4 py-2'>Content</Link>:""}
+          {admin?<Link to="/dash" className='text-sky-700 px-4 py-2'>Dashboard</Link>:""}
         </nav>
       </header>
         <Outlet/>
