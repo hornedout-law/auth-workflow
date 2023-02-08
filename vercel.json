@@ -1,5 +1,13 @@
 {
     "rewrites": [
         {"source": "/((?!assets/|api/).*)", "destination": "/api/ssr.js"}
-    ]
+    ],
+    "functions":{
+        "api/ssr.*": {
+            "includeFiles": ["src/main-server.*"]
+        },
+        "api/admin-login": {
+            "includeFiles": ["src/store/firebase.*"]
+        }
+    }
 }
