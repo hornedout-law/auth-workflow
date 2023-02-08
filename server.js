@@ -74,13 +74,7 @@ let createServer = async () => {
   let vite = await viteDevServer(isProd);
   app.use(vite.middlewares ?? vite);
 
-  let defaultLogger = ((isProd) => {
-    if (isProd) {
-      return (e) => console.log(e);
-    } else {
-      return (e) => vite.ssrFixStacktrace(e);
-    }
-  })(isProd);
+  let defaultLogger = ((isProd) => isProd ? (e) => console.log(e):(e) => vite.ssrFixStacktrace(e))(isProd);
 
   app.use("*", async (req, res, next) => {
     let url = req.originalUrl;

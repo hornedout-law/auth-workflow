@@ -38,7 +38,7 @@ export let useAuthStore = create<AuthState>()((set) => ({
         cred.password
       );
       if (response.user) {
-        let res = await fetch("/admin-login", {
+        let res = await fetch("/api/admin-login", {
           method: "POST",
           body: JSON.stringify(response.user),
           headers: {
