@@ -3,7 +3,8 @@ import ReactDOM from 'react-dom/client'
 import App from './App'
 import './index.css'
 
+let root = ReactDOM.createRoot(document.getElementById("root") as Element)
 
-ReactDOM.hydrateRoot(document.getElementById("root") as HTMLElement, <React.StrictMode>
-  <App />
+root.render(<React.StrictMode>
+  <App/>
 </React.StrictMode>)

@@ -13,11 +13,11 @@ function UserLogin() {
       <ErrorMessage />
             <div className="w-full flex flex-col p-2">
                 <label htmlFor="" className="font-light text-sky-900">Username or email</label>
-                <input type="text" {...register("email")} className="focus:border-b-2 focus:border-green-500 border border-stone-100 border-b-2 p-2 " placeholder="john doe"/>
+                <input type="text" {...register("email")} className="focus:border-b-2 focus:border-green-500 border border-stone-100 border-b-2 p-2 border-b-stone-500" placeholder="john doe"/>
             </div>
             <div className="w-full flex flex-col p-2">
                 <label htmlFor="" className="font-light text-sky-900">Password</label>
-                <input type="password" {...register("password")} className="focus:border-b-2 focus:border-green-500 border border-stone-100 border-b-2 p-2 " placeholder="password"/>
+                <input type="password" {...register("password")} className="focus:border-b-2 focus:border-green-500 border border-stone-100 border-b-2 p-2 border-b-stone-500" placeholder="password"/>
             </div>
             <div className="w-full flex flex-row justify-between p-2">
                 <Link to="/signup" className="text-sky-600 font-bold">Don't have an account ?</Link>

@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { create } from "zustand";
 
-import { auth } from "../store/firebase";
+import { auth } from "../../store/firebase";
 import {
   User,
   Auth,

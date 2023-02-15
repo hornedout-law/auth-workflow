@@ -1,13 +1,21 @@
-import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { Auth} from 'firebase-admin/auth';
-import {auth} from "../src/store/firebase"
+import type { VercelRequest, VercelResponse } from "@vercel/node";
+import { getAuth } from "firebase-admin/auth";
+import { initializeApp } from "firebase-admin";
+import { cert, ServiceAccount } from "firebase-admin/app";
+import adminAccess from "../store/exp-911-firebase-adminsdk-6oxi3-d78a41bd05.json";
 
-export default async function(req: VercelRequest, res: VercelResponse){
-    let userData = req.body;
-    let user = await( auth as Auth).getUserByEmail(userData?.email);
-    if (!user.customClaims?.admin) {
-      await ( auth as Auth).setCustomUserClaims(user.uid, { admin: true });
-      user = await ( auth as Auth).getUserByEmail(userData?.email);
-    }
-    res.status(201).json(user);
+let auth = getAuth(
+  initializeApp({
+    credential: cert(adminAccess as ServiceAccount),
+  })
+);
+
+export default async function (req: VercelRequest, res: VercelResponse) {
+  let userData = req.body;
+  let user = await auth.getUserByEmail(userData?.email);
+  if (!user.customClaims?.admin) {
+    await auth.setCustomUserClaims(user.uid, { admin: true });
+    user = await auth.getUserByEmail(userData?.email);
   }
+  res.status(201).json(user);
+}

@@ -20,11 +20,9 @@ const firebaseConfig = {
 
 // Initialize Firebase
 
-export const app = !import.meta.env.SSR ? initializeApp(firebaseConfig) : {};
-export const analytics = !import.meta.env.SSR
-  ? getAnalytics(app as FirebaseApp)
-  : {};
-export const auth = !import.meta.env.SSR ? getAuth(app as FirebaseApp) : {};
-export const firestore = !import.meta.env.SSR
-  ? getFirestore(app as FirebaseApp)
-  : {};
+export const app = initializeApp(firebaseConfig) 
+export const analytics =  getAnalytics(app as FirebaseApp)
+
+export const auth = getAuth(app as FirebaseApp)
+export const firestore = getFirestore(app as FirebaseApp)
+ 

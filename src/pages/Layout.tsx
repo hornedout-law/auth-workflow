@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react'
 import {Outlet, Link, useNavigate} from "react-router-dom"
-import { auth } from '../store/firebase'
+import { auth } from '../../store/firebase'
 import {useAuthStore} from "./auth.logic"
 
 /**

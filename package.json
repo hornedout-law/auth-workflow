@@ -4,9 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "NODE_ENV=development nodemon server",
-    "build:client": "vite build --outDir dist/client",
-    "build:server": "vite build --outDir dist/server --ssr src/main-server.tsx",
+    "dev": "vite",
     "build": "yarn build:client && yarn build:server",
     "start": "NODE_ENV=production node server",
     "preview": "vite preview"

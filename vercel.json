@@ -3,11 +3,11 @@
         {"source": "/((?!assets/|api/).*)", "destination": "/api/ssr.js"}
     ],
     "functions":{
-        "api/ssr.*": {
-            "includeFiles": ["src/main-server.*"]
+        "api/ssr.js": {
+            "includeFiles": ["src/main-server.js"]
         },
-        "api/admin-login": {
-            "includeFiles": ["src/store/firebase.*"]
+        "api/admin-login.js": {
+            "includeFiles": ["./store/**/*" ]
         }
     }
 }

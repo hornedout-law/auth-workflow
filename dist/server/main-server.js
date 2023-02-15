@@ -26,7 +26,7 @@ let useAuthStore = create()((set) => ({
         cred.password
       );
       if (response.user) {
-        let res = await fetch("/admin-login", {
+        let res = await fetch("/api/admin-login", {
           method: "POST",
           body: JSON.stringify(response.user),
           headers: {
@@ -35,7 +35,7 @@ let useAuthStore = create()((set) => ({
         });
         var data = await res.json();
       }
-      set({ admin: data, fullfilled: true, pending: false });
+      set({ admin: data, user: null, fullfilled: true, pending: false });
     } catch (error) {
       set((state) => ({ error, pending: false }));
     }
@@ -48,7 +48,7 @@ let useAuthStore = create()((set) => ({
         cred.email,
         cred.password
       );
-      set({ user: res.user, fullfilled: true, pending: false });
+      set({ user: res.user, admin: null, fullfilled: true, pending: false });
     } catch (error) {
       set((state) => ({ error, pending: false }));
     }
@@ -75,7 +75,11 @@ const useAuthLogic = () => {
     handleSubmit,
     formState: { errors }
   } = useForm();
-  let { loginAdmin, loginUser, signupUser } = useAuthStore((state) => ({ loginAdmin: state.loginAdmin, signupUser: state.signupUser, loginUser: state.loginUser }));
+  let { loginAdmin, loginUser, signupUser } = useAuthStore((state) => ({
+    loginAdmin: state.loginAdmin,
+    signupUser: state.signupUser,
+    loginUser: state.loginUser
+  }));
   let handleAdminLogin = (data) => {
     loginAdmin({ email: data == null ? void 0 : data.email, password: data == null ? void 0 : data.password });
   };
@@ -85,7 +89,13 @@ const useAuthLogic = () => {
   let handleUserSignup = (data) => {
     signupUser({ email: data == null ? void 0 : data.email, password: data == null ? void 0 : data.password });
   };
-  return { register, handleSubmit, handleAdminLogin, handleUserLogin, handleUserSignup };
+  return {
+    register,
+    handleSubmit,
+    handleAdminLogin,
+    handleUserLogin,
+    handleUserSignup
+  };
 };
 function Layout() {
   let { user, admin } = useAuthStore((state) => ({ user: state.user, admin: state.admin }));
@@ -119,14 +129,14 @@ function UserLogin() {
     /* @__PURE__ */ jsx(ErrorMessage, {}),
     /* @__PURE__ */ jsxs("div", { className: "w-full flex flex-col p-2", children: [
       /* @__PURE__ */ jsx("label", { htmlFor: "", className: "font-light text-sky-900", children: "Username or email" }),
-      /* @__PURE__ */ jsx("input", { type: "text", ...register("email"), className: "focus:border-b-2 focus:border-green-500 border border-stone-100 border-b-2 p-2 border-stone-500", placeholder: "john doe" })
+      /* @__PURE__ */ jsx("input", { type: "text", ...register("email"), className: "focus:border-b-2 focus:border-green-500 border border-stone-100 border-b-2 p-2 ", placeholder: "john doe" })
     ] }),
     /* @__PURE__ */ jsxs("div", { className: "w-full flex flex-col p-2", children: [
       /* @__PURE__ */ jsx("label", { htmlFor: "", className: "font-light text-sky-900", children: "Password" }),
-      /* @__PURE__ */ jsx("input", { type: "password", ...register("password"), className: "focus:border-b-2 focus:border-green-500 border border-stone-100 border-b-2 p-2 border-stone-500", placeholder: "password" })
+      /* @__PURE__ */ jsx("input", { type: "password", ...register("password"), className: "focus:border-b-2 focus:border-green-500 border border-stone-100 border-b-2 p-2 ", placeholder: "password" })
     ] }),
     /* @__PURE__ */ jsxs("div", { className: "w-full flex flex-row justify-between p-2", children: [
-      /* @__PURE__ */ jsx("a", { href: "signupform.html", className: "text-sky-600 font-bold", children: "Don't have an account ?" }),
+      /* @__PURE__ */ jsx(Link, { to: "/signup", className: "text-sky-600 font-bold", children: "Don't have an account ?" }),
       /* @__PURE__ */ jsx("input", { type: "submit", className: "basis-5/12 py-2 text-uppercase bg-sky-600 font-font text-white", value: pending ? "Loading..." : fullfilled ? "OK" : "Login" })
     ] })
   ] }) });
@@ -162,26 +172,26 @@ function UserSignup() {
     /* @__PURE__ */ jsx(ErrorMessage, {}),
     /* @__PURE__ */ jsxs("div", { className: "w-full flex flex-col p-2", children: [
       /* @__PURE__ */ jsx("label", { htmlFor: "", className: "font-light text-sky-900", children: "Username" }),
-      /* @__PURE__ */ jsx("input", { type: "text", ...register("username"), className: "focus:border-b-2 focus:border-green-500 border border-stone-100 border-b-2 p-2 border-stone-500", placeholder: "john doe" })
+      /* @__PURE__ */ jsx("input", { type: "text", ...register("username"), className: "focus:border-b-2 focus:border-green-500 border border-stone-100 border-b-2 p-2", placeholder: "john doe" })
     ] }),
     /* @__PURE__ */ jsxs("div", { className: "w-full flex flex-col p-2", children: [
       /* @__PURE__ */ jsx("label", { htmlFor: "", className: "font-light text-sky-900", children: "Email" }),
-      /* @__PURE__ */ jsx("input", { type: "text", ...register("email"), className: "focus:border-b-2 focus:border-green-500 border border-stone-100 border-b-2 p-2 border-stone-500", placeholder: "john@doe.com" })
+      /* @__PURE__ */ jsx("input", { type: "text", ...register("email"), className: "focus:border-b-2 focus:border-green-500 border border-stone-100 border-b-2 p-2", placeholder: "john@doe.com" })
     ] }),
     /* @__PURE__ */ jsxs("div", { className: "w-full flex flex-col p-2", children: [
       /* @__PURE__ */ jsx("label", { htmlFor: "", className: "font-light text-sky-900", children: "Phone" }),
-      /* @__PURE__ */ jsx("input", { type: "text", ...register("phone"), className: "focus:border-b-2 focus:border-green-500 border border-stone-100 border-b-2 p-2 border-stone-500", placeholder: "+1221 23 334" })
+      /* @__PURE__ */ jsx("input", { type: "text", ...register("phone"), className: "focus:border-b-2 focus:border-green-500 border border-stone-100 border-b-2 p-2", placeholder: "+1221 23 334" })
     ] }),
     /* @__PURE__ */ jsxs("div", { className: "w-full flex flex-col p-2", children: [
       /* @__PURE__ */ jsx("label", { htmlFor: "", className: "font-light text-sky-900", children: "Password" }),
-      /* @__PURE__ */ jsx("input", { type: "password", ...register("password"), className: "focus:border-b-2 focus:border-green-500 border border-stone-100 border-b-2 p-2 border-stone-500", placeholder: "password" })
+      /* @__PURE__ */ jsx("input", { type: "password", ...register("password"), className: "focus:border-b-2 focus:border-green-500 border border-stone-100 border-b-2 p-2", placeholder: "password" })
     ] }),
     /* @__PURE__ */ jsxs("div", { className: "w-full flex flex-col p-2", children: [
       /* @__PURE__ */ jsx("label", { htmlFor: "", className: "font-light text-sky-900", children: "Confirm Password" }),
-      /* @__PURE__ */ jsx("input", { type: "password", ...register("confirmpassword"), className: "focus:border-b-2 focus:border-green-500 border border-stone-100 border-b-2 p-2 border-stone-500", placeholder: "password again" })
+      /* @__PURE__ */ jsx("input", { type: "password", ...register("confirmpassword"), className: "focus:border-b-2 focus:border-green-500 border border-stone-100 border-b-2 p-2", placeholder: "password again" })
     ] }),
     /* @__PURE__ */ jsxs("div", { className: "w-full flex flex-row justify-between p-2", children: [
-      /* @__PURE__ */ jsx("a", { href: "loginform.html", className: "text-sky-600 font-bold", children: "Already have an account ?" }),
+      /* @__PURE__ */ jsx(Link, { to: "/", className: "text-sky-600 font-bold", children: "Already have an account ?" }),
       /* @__PURE__ */ jsx("input", { type: "submit", className: "basis-5/12 py-2 text-uppercase bg-sky-600 font-font text-white", value: pending ? "Loading..." : fullfilled ? "OK" : "Login" })
     ] })
   ] }) });
