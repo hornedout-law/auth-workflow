@@ -7,7 +7,7 @@ export default async (req: VercelRequest, res: VercelResponse) => {
     let url = req.url;
     try {
         let template = readFileSync(
-            resolve(__dirname, "../dist/client/index.html"),
+            resolve(__dirname, "../dist/index.html"),
             { encoding: "utf-8" }
           );
       let html = render(url as string);
