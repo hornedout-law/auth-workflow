@@ -3,10 +3,10 @@
         {"source": "/((?!assets/|api/).*)", "destination": "/api/ssr.js"}
     ],
     "functions":{
-        "api/ssr.js": {
+        "ssr.js": {
             "includeFiles": "server/main.js"
         },
-        "api/admin-login.js": {
+        "admin-login.js": {
             "includeFiles": "./exp-911-firebase-adminsdk-6oxi3-d78a41bd05.json"
         }
     }
