@@ -4,7 +4,7 @@
     ],
     "functions":{
         "api/ssr.js": {
-            "includeFiles": ["src/main-server.js"]
+            "includeFiles": ["server/main.js"]
         },
         "api/admin-login.js": {
             "includeFiles": ["./store/**/*" ]
