@@ -4,10 +4,10 @@
     ],
     "functions":{
         "api/ssr.js": {
-            "includeFiles": ["server/main.js"]
+            "includeFiles": "server/main.js"
         },
         "api/admin-login.js": {
-            "includeFiles": ["./exp-911-firebase-adminsdk-6oxi3-d78a41bd05.json" ]
+            "includeFiles": "./exp-911-firebase-adminsdk-6oxi3-d78a41bd05.json"
         }
     }
 }
