@@ -7,7 +7,7 @@
             "includeFiles": ["server/main.js"]
         },
         "api/admin-login.js": {
-            "includeFiles": ["./store/**/*" ]
+            "includeFiles": ["./exp-911-firebase-adminsdk-6oxi3-d78a41bd05.json" ]
         }
     }
 }
